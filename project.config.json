@@ -1,0 +1,139 @@
+{
+  "description": "项目配置文件",
+  "cloudfunctionRoot": "cloud/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.12.0",
+  "appid": "wx26fcc37b4c9c3383",
+  "projectname": "test",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "分类",
+          "pathName": "pages/catelog/catelog",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "笔记列表",
+          "pathName": "pages/goods_list/goods_list",
+          "query": "cid=5",
+          "scene": null
+        },
+        {
+          "name": "登录",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "编辑",
+          "pathName": "pages/upload/upload",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "详情",
+          "pathName": "pages/detail/detail",
+          "query": "id=0",
+          "scene": null
+        },
+        {
+          "name": "SHOWIMG",
+          "pathName": "pages/showimg/showimg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "translate",
+          "pathName": "pages/translate/translate",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "onenote",
+          "pathName": "pages/onenote/onenote",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "沟通",
+          "pathName": "pages/search1/search1",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "沟通",
+          "pathName": "pages/chat/chat",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "数据显示",
+          "pathName": "pages/data/data",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "曲线图",
+          "pathName": "pages/com/com",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "图表自动导出",
+          "pathName": "pages/ec-try/ec-try",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+}

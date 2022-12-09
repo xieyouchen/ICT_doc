@@ -1,0 +1,42 @@
+
+<view class="container">
+    <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+    <!-- <ec-canvas id="mychart-dom-scatter" canvas-id="mychart-scatter" ec="{{ ec1 }}">2</ec-canvas> -->
+  </view>
+<view class="under">
+  <view class="bg-h">{{detail.year}}-{{detail.month}}-{{detail.day}}具体数据</view>
+<view class="tr bg-w">
+  <view class="th">时间段</view>
+  <view class="th">第0.5s</view>
+  <view class="th">第1.0s</view>
+  <view class="th ">第1.5s</view>
+  <view class="th">第2.0s</view>
+  <view class="th ">第2.5s</view>
+  <view class="th ">第3.0s</view>
+  </view>
+  
+  
+<scroll-view scroll-y class="table" style="height:20%" scroll-into-view="{{toView}}" scroll-with-animation="true">
+  <block wx:for="{{detail.today}}" wx:key="{{index}}">
+  <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+  <view class="td">{{item.tag}}</view>
+  <view class="td">{{item.data[0]}}</view>
+  <view class="td">{{item.data[1]}}</view>
+  <view class="td">{{item.data[2]}}</view>
+  <view class="td">{{item.data[3]}}</view>
+  <view class="td">{{item.data[4]}}</view>
+  <view class="td">{{item.data[5]}}</view>
+  </view>
+  <view class="tr" wx:else>
+    <view class="td">{{item.tag}}</view>
+  <view class="td">{{item.data[0]}}</view>
+  <view class="td">{{item.data[1]}}</view>
+  <view class="td">{{item.data[2]}}</view>
+  <view class="td">{{item.data[3]}}</view>
+  <view class="td">{{item.data[4]}}</view>
+  <view class="td">{{item.data[5]}}</view>
+  </view>
+  </block>
+  <view id="toView" ></view>
+ </scroll-view>
+</view>

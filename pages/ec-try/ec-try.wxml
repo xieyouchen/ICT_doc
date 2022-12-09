@@ -1,0 +1,4 @@
+<view class="container">
+  <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}">1</ec-canvas>
+</view>
+<button bindtap="down1">导出</button>

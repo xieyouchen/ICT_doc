@@ -1,0 +1,22 @@
+/* pages/detail/detail.wxss */
+.icon{
+  width:80rpx;
+  height:80rpx;
+}
+
+.tip{
+  margin-top: 40 rpx;
+  margin-bottom: 40 rpx;
+  font-size: 70rpx;
+  color: cornflowerblue;
+}
+.pinglunss{
+  border-bottom: 2px solid gainsboro;
+  margin-left: 50 rpx;
+  margin-top: 30 rpx;
+}
+.input{
+border:2px solid gainsboro;
+margin-top: 100rpx ;
+margin-bottom: 50rpx;
+}

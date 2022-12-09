@@ -1,0 +1,5 @@
+<view class="search_input">
+    <navigator url="/pages/chat/chat" open-type="navigate">
+        <view id="search">沟通</view>
+    </navigator>
+</view>

@@ -1,0 +1,7 @@
+<view class="label">
+  <p>DeviceName：<b class="name">{{name}}</b></p>
+  <div class="type">Service UUID</div>
+</view>
+<view wx:for="{{services}}" class="item" data-uuid="{{item.uuid}}" bindtap="getCharacteristic" wx:for-index="index">
+ 选项 {{index}}
+</view>

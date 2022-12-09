@@ -1,0 +1,58 @@
+<view class="cate">
+  <!-- 医生 -->
+  <view class="cate_container">
+    <scroll-view scroll-y class="left">
+      <view class="menu_item {{current===index?'active':''}}" wx:for="{{left_list}}" wx:key="*this"
+        bindtap="handleindex" data-index="{{index}}">
+        {{item}}
+
+      </view>
+    </scroll-view>
+    <scroll-view scroll-y class="right" scroll-top="{{scrollTOP}}">
+      <view class="goods_group" wx:for="{{right_content}}" wx:for-index="index1" wx:for-item="item1">
+        <view class="goods_title">
+          <view class="delimiter">
+            FVC:{{item1.FVC}}
+          </view>
+          <view class="delimiter">
+            FEV1:{{item1.FEV1}}
+          </view>
+          <view class="delimiter">
+            PEF:{{item1.PEF}}
+          </view>
+          <view class="delimiter">
+            PEFR:{{item1.PEFR}}
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!-- 病人 -->
+  <!-- 参数命名和医生的完全一样，需要修改一下各自的逻辑，因为样式是一样的不影响就直接搬过来了 -->
+  <!-- <view class="cate_container">
+        <scroll-view scroll-y class="left">
+            <view class="menu_item {{current===index?'active':''}}" wx:for="{{left_list}}" wx:key="*this" bindtap="handleindex" data-index="{{index}}">
+                {{item}}
+            </view>
+        </scroll-view>
+        <scroll-view scroll-y class="right" scroll-top="{{scrollTOP}}">
+            <view class="goods_group" wx:for="{{right_content}}" wx:for-index="index1" wx:for-item="item1">
+                <view class="goods_title">
+                    <view class="delimiter">
+                        {{item1.cat_name}}
+                    </view>
+                </view>
+                <view class="goods_list">
+                    <navigator wx:for="{{item1.children}}" wx:for-index="index2" wx:for-item="item2" wx:key="cat_id">
+                        <image class="" src="{{item2.cat_icon}}" mode="widthFix">
+
+                        </image>
+                        <view class="goods_name">
+                            {{item2.cat_name}}
+                        </view>
+                    </navigator>
+                </view>
+            </view>
+        </scroll-view>
+    </view> -->
+</view>

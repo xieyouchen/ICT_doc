@@ -1,0 +1,89 @@
+page {
+  height: 100%;
+}
+.cate {
+  height: 100%;
+}
+.cate .cate_container {
+  /* less中使用calc的时候要注意 */
+  height: calc( 100vh  );
+  display: flex;
+}
+.cate .cate_container .left {
+  /* 子项 高度 100% flex */
+  flex: 3;
+}
+.cate .cate_container .left .menu_item {
+  height: 150rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35rpx;
+}
+.cate .cate_container .left .active {
+  color: #3366CC;
+  border-left: 10rpx solid currentColor;
+}
+.cate .cate_container .right {
+  /* 子项 高度 100% flex */
+  flex: 6;
+}
+.cate .cate_container .right .goods_group {
+  padding-top: 10px;
+  /* padding-right: 10px; */
+}
+.cate .cate_container .right .goods_group .goods_title {
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+  background-color: #3366CC;
+  font-size: 15px;
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cate .cate_container .right .goods_group .goods_title .delimiter {
+  color: #000;
+  padding: 0 10rpx;
+}
+.cate .cate_container .right .goods_group .goods_list {
+  display: flex;
+  flex-wrap: wrap;
+  border-width: 2px;
+  border-color: #3366CC;
+}
+.cate .cate_container .right .goods_group .goods_list navigator {
+  width: 100%;
+  text-align: center;
+  border-color: #3366CC;
+}
+.cate .cate_container .right .goods_group .goods_list navigator image {
+  width: 80%;
+}
+.bottom_bar{
+  position: fixed;
+  height: 100rpx;
+  width: 100%;
+  background-color: #F8F7EE;
+  color: #AFBFCF;
+  bottom: 0rpx;
+  border-top: solid 1rpx #d2d2d2;
+  display: flex;
+}
+.tab_box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 187rpx;
+}
+.tab_icon{
+  height: 64rpx;
+  width: 64rpx;
+  margin-top: 6rpx;
+}
+.tab_text{
+  height: 20rpx;
+  font-size: 20rpx;
+  display: flex;
+  justify-content: center;
+}

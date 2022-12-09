@@ -1,0 +1,123 @@
+<!--index.wxml-->
+<!-- <view class="container">
+    <view class="userinfo">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+        <block wx:else>
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        </block>
+    </view>
+</view> -->
+<!-- <Tab tabs="{{tabs}}" binditemchange="itemChange" calss="tab">
+    <block wx:if="{{tabs[0].isactive}}">
+        <scroll-view scroll-y class="scroll" style="height:60%">
+            <view class="first_tab">
+                <view class="goods_item" >
+                    
+                    <navigator class="goods_img_wrap" url="/pages/detail/detail?id={{item._id}}&user={{user}}&mylikes={{my_likes[index]}}&mycollects={{my_collects[index]}}" open-type="navigate">
+                        <image src="../../icon/doc.jpg" mode="widthFix" style="max-height: 150px;min-height: 130px;">
+                        </image>
+                    </navigator>
+                    
+                    <view class="goods_info_wrap">
+                        <view class="goods_name">贺医生</view>
+                        <view class="goods_price">上海xx医院呼吸科主治医师</view>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+        <text class="iconfont icon-zuijinyuedu"></text>
+    </block>
+        <block wx:elif="{{tabs[1].isactive}}">
+            <block >
+                <view class="pinglunss">
+                <text>建议1：</text>
+                <text>注意生活方面的照顾，饮食方面可能导致哮喘发作的食物，应该避免去接触，房间里要特别注意环境的管理，应该尽量保持房间的清洁，在哮喘其他的生活方面，比如尽量避免接触油烟，尤其是避免接触香烟，吸烟或者二手烟对哮喘是需要绝对避免的。</text>
+                </view>
+                </block>
+        </block>
+    
+</Tab> -->
+<view class="center_page">
+    <view class="center_top">
+        <view class="login_card">
+            <view class="login_button" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" >
+                登 录
+            </view>
+            <view class="login_status" wx:else>
+                <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+                <view>
+                <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+                <text class="userinfo-nickname" wx:if="{{flag==2}}">(病人)</text>
+                <text class="userinfo-nickname" wx:if="{{flag==1}}">(医生)</text>
+            </view>
+            </view>
+        </view>
+    </view>
+    <view class="non-box">
+    </view>
+    <!-- 医生展示 -->
+    <!-- <view class="center_tab">
+        <view class="tab_top">
+            <view class="one_tab">基本信息</view>
+            <view class="one_tab">近期建议</view>
+        </view> 
+        <view class="info">
+            <image class="info_image" src="../../icon/doc.jpg"></image>
+            <view class="info_name">
+                <view >xx医生</view>
+                <view>xx医院</view>
+            </view>
+        </view>      
+    </view> -->
+    <!-- 病人展示 -->
+    <view class="center_tab">
+        <view class="tab_top">
+            <view class="{{toTabs==1?'one_tab_active':'one_tab'}}" bindtap="checkCondition" wx:if="{{flag==2}}">检测情况</view>
+            <view class="{{toTabs==2?'one_tab_active':'one_tab'}}" bindtap="checkInfo">基本信息</view>
+        </view>
+        <block wx:if="{{toTabs==1&&flag==2}}">
+            <scroll-view scroll-y class="scroll" style="height:42%">
+                <view class="first_tab" wx:for="{{user_detail.mydata}}" data-index="{{index}}" bindtap="transfer">
+                    <view class="check"  >
+                        <image class="check_image" src="{{item.today[0].img}}" mode="widthFix" style="max-height: 100px;min-height: 90px;"></image>
+                        <view class="check_text">
+                            <view class="check_time">检测时间：</view>
+                            <view class="check_time">{{item.year}}-{{item.month}}-{{item.day}}</view>
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+            
+        </block>
+        <block wx:if="{{flag==2&&toTabs==2}}">
+            <view class="info">
+                <image class="info_image" src="../../icon/doc.jpg"></image>
+                <view class="info_name">
+                    <view>姓名: {{doctor.name}}</view>
+                    <view>注册时间：</view>
+                    <view >{{doctor.registerTime}}</view>
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{flag==1}}">
+            <view class="info">
+                <image class="info_image" src="../../icon/doc.jpg"></image>
+                <view class="info_name">
+                    <view>姓名: {{user_detail.name}}</view>
+                    <view>年龄: {{user_detail.age}}</view>
+                    <view>所在医院: {{user_detail.workplace}}</view>
+                    <view>所属科室: {{user_detail.expertise}}</view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>
+
+<view class="choice_mask" wx:if="{{flag == 0}}"> 
+    <view class="choice_box">
+        <view class="tip_text">请选择身份</view>
+        <view class="{{ispatient ? 'choice_tab' : 'no_choice'}}" bindtap="chooseD">医生</view>
+        <view class="{{!ispatient ? 'choice_tab' : 'no_choice'}}" bindtap="chooseP">病人</view>
+    </view>
+</view>

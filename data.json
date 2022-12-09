@@ -1,0 +1,157 @@
+{
+    "message": [{
+            "cat_id": 1,
+            "cat_name": "计算机",
+            "cat_pid": 0,
+            "cat_level": 0,
+            "cat_deleted": false,
+            "cat_icon": "/icon/4_.jpg",
+            "children": [{
+                    "cat_id": 3,
+                    "cat_name": "编程语言&技巧",
+                    "cat_pid": 1,
+                    "cat_level": 1,
+                    "cat_deleted": false,
+                    "cat_icon": "/icon/4_.jpg",
+                    "children": [{
+                            "cat_id": 5,
+                            "cat_name": "C",
+                            "cat_pid": 3,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/2fb113b32f7a2b161f5ee4096c319afedc3fd5a1.jpg"
+                        },
+                        {
+                            "cat_id": 6,
+                            "cat_name": "Python",
+                            "cat_pid": 3,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/5e38cf9e6e7c46a17fe1c597a883ae627977b296.jpg"
+                        },
+                        {
+                            "cat_id": 8,
+                            "cat_name": "Java",
+                            "cat_pid": 3,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/cece39bd7e9654c20043e4af71696e1f838d4a22.jpg"
+                        }
+                    ]
+                },
+                {
+                    "cat_id": 7,
+                    "cat_name": "大学数学解题",
+                    "cat_pid": 1,
+                    "cat_level": 1,
+                    "cat_deleted": false,
+                    "cat_icon": "/icon/4.jpg",
+                    "children": [{
+                            "cat_id": 23,
+                            "cat_name": "高等数学",
+                            "cat_pid": 7,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/994977fac8f4fa6cea5eb413cd64ddac24a97600.jpg"
+                        },
+                        {
+                            "cat_id": 24,
+                            "cat_name": "线性代数",
+                            "cat_pid": 7,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/19fc040b41b4c821c16748529545265f5feb34fa.jpg"
+                        },
+                        {
+                            "cat_id": 25,
+                            "cat_name": "概率论",
+                            "cat_pid": 7,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/7f3dfec1efdb2559d7fba1ea39d901f4763fae21.jpg"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cat_id": 1,
+            "cat_name": "计算机",
+            "cat_pid": 0,
+            "cat_level": 0,
+            "cat_deleted": false,
+            "cat_icon": "/icon/4_.jpg",
+            "children": [{
+                    "cat_id": 3,
+                    "cat_name": "编程语言&技巧",
+                    "cat_pid": 1,
+                    "cat_level": 1,
+                    "cat_deleted": false,
+                    "cat_icon": "/icon/4_.jpg",
+                    "children": [{
+                            "cat_id": 5,
+                            "cat_name": "C",
+                            "cat_pid": 3,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/2fb113b32f7a2b161f5ee4096c319afedc3fd5a1.jpg"
+                        },
+                        {
+                            "cat_id": 6,
+                            "cat_name": "Python",
+                            "cat_pid": 3,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/5e38cf9e6e7c46a17fe1c597a883ae627977b296.jpg"
+                        },
+                        {
+                            "cat_id": 8,
+                            "cat_name": "Java",
+                            "cat_pid": 3,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/cece39bd7e9654c20043e4af71696e1f838d4a22.jpg"
+                        }
+                    ]
+                },
+                {
+                    "cat_id": 7,
+                    "cat_name": "大学数学解题",
+                    "cat_pid": 1,
+                    "cat_level": 1,
+                    "cat_deleted": false,
+                    "cat_icon": "/icon/4.jpg",
+                    "children": [{
+                            "cat_id": 23,
+                            "cat_name": "高等数学",
+                            "cat_pid": 7,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/994977fac8f4fa6cea5eb413cd64ddac24a97600.jpg"
+                        },
+                        {
+                            "cat_id": 24,
+                            "cat_name": "线性代数",
+                            "cat_pid": 7,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/19fc040b41b4c821c16748529545265f5feb34fa.jpg"
+                        },
+                        {
+                            "cat_id": 25,
+                            "cat_name": "概率论",
+                            "cat_pid": 7,
+                            "cat_level": 2,
+                            "cat_deleted": false,
+                            "cat_icon": "https://api-hmugo-web.itheima.net/full/7f3dfec1efdb2559d7fba1ea39d901f4763fae21.jpg"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "msg": "获取成功",
+        "status": 200
+    }
+}

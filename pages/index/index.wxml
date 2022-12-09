@@ -1,0 +1,87 @@
+<!-- 医生 -->
+<view wx:if="{{theflag == 1}}">
+    <Tab tabs="{{tabs}}" binditemchange="itemChange">
+        <block wx:if="{{tabs[0].isactive}}">
+            <scroll-view scroll-y class="scroll" style="height:60%">
+                <view class="first_tab" wx:for="{{patientlist}}" data-index="{{index}}">
+                    <view class="goods_item" >                
+                        <navigator class="goods_img_wrap" url="/pages/chat/chat?id={{item._id}}" open-type="navigate">
+                            <image src="{{item.img}}" mode="widthFix" style="max-height: 150px;min-height: 130px;">
+                            </image>
+                        </navigator>              
+                        <view class="goods_info_wrap">
+                            <view class="goods_name">{{item.name}}</view>
+                            <view class="goods_price">{{item.content}}</view>
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+            <text class="iconfont icon-zuijinyuedu"></text>
+        </block>
+        <block wx:if="{{tabs[1].isactive}}">
+            <scroll-view scroll-y class="scroll" style="height:60%">
+                <view class="first_tab">
+                    <view class="goods_item" >            
+                        <navigator class="goods_img_wrap" url="/pages/detail/detail?id={{item._id}}&user={{user}}&mylikes={{my_likes[index]}}&mycollects={{my_collects[index]}}" open-type="navigate">
+                            <image src="../../icon/jiance1.jpg" mode="widthFix" style="max-height: 150px;min-height: 130px;">
+                            </image>
+                        </navigator>
+                        <!-- 右侧 -->
+                        <view class="goods_info_wrap">
+                            <view class="goods_name">刘xx</view>
+                            <view class="goods_price">测量时间： 2020-12-17 10:34</view>
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+            <text class="iconfont icon-zuijinyuedu"></text>
+        </block>
+    </Tab>
+</view>
+
+<!-- 病人 -->
+<view wx:else>
+    <swiper autoplay="1" circular="true" indicator-dots="3">
+        <swiper-item>
+            <image src="../../icon/11.jpg" mode="widthFix"></image>
+        </swiper-item>
+        <swiper-item>
+            <image src="../../icon/12.jpg" mode="widthFix"></image>
+        </swiper-item>
+        <swiper-item>
+            <image src="../../icon/13.jpg" mode="widthFix"></image>
+        </swiper-item>
+        <swiper-item>
+            <image src="../../icon/14.jpg" mode="widthFix"></image>
+        </swiper-item>
+    </swiper>
+    
+    <Tab tabs="{{tabs}}" binditemchange="itemChange">
+        <!-- 蓝牙连接 -->
+        <block wx:if="{{tabs[0].isactive}}">
+            
+                <scroll-view scroll-y style="height:60%" class="scroll">
+                    <view wx:for="{{devs}}" class="item" data-dev="{{item}}" data-name="{{item.name}}" bindtap="connect" wx:if="{{item.name!=''}}" >
+                      <view class="rss" >RSSI：{{item.RSSI}}</view>
+                      <view class="name" >{{item.name}}</view>
+                      <view class="uuid" >DeviceId：{{item.deviceId}}</view>
+                    </view>
+                </scroll-view>
+        </block>
+        <block wx:elif="{{tabs[1].isactive}}">
+            <view class="floor" wx:for="{{floor}}" wx:for-item="item1" wx:for-index="index1" wx:key="id">
+                <view class="floor_container">
+                    <view class="floor_title">{{item1.name}}</view>
+                    <navigator class="floor_item" wx:for="{{item1.contain}}" wx:for-item="item2" wx:for-index="index2" wx:key="id_sec">
+                        {{item2.name_sec}}</navigator>
+                </view>
+            </view>
+        </block>
+        <!-- <block wx:elif="{{tabs[2].isactive}}">
+            <cates cates="{{cates1}}" binditemchange="c_itemChange"></cates>
+        </block> -->
+    </Tab>
+    <!-- <view class="write">
+        <view bindtap="to" class="to">每日监测</view>
+    </view> -->
+</view>

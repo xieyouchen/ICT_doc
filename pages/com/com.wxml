@@ -1,0 +1,40 @@
+<!--pages/com/com.wxml-->
+<!-- 
+<view class="empty_tip " >
+
+  <view class="receiver_container">{{receiverText}}</view>
+
+  <view class="section">
+    <view class="flex-wrp" style="flex-direction:row; justify-content:space-between;">
+      <view class="flex-wrp" style="flex-direction:column;">
+        <view class="flex-item bc_red">RX：<span class="num">{{receiverLength}}</span></view>
+        <view class="flex-item bc_green">TX: <span class="num">{{sendLength}}</span></view>
+      </view>
+      <view style="float: right;"><button type="button" bindtap="clearReceiverText" >清除</button></view>
+    </view>
+  </view>
+
+  <view class="send_container">
+    <textarea style="width: 100%;height: 100%;background: #F0F0F0;" auto-focus="true" cursor-spacing="100" value="{{sendText}}" maxlength="1024" bindblur="updateSendText" placeholder="输入发送数据..." placeholder-class="placeholder"/>
+  </view>
+
+  <view class="group">
+    <view class="ops">
+      <view class="ops_label">定时发送：</view>
+      <view class="ops_content">
+        <checkbox-group bindchange="timeChange">
+          <checkbox value="true"/>
+        </checkbox-group>
+        <input value="{{time}}" bindblur="updateTime" />ms
+      </view>
+    </view>
+    <button type="button" class="send" bindtap="manualSend">发送</button>
+  </view>
+</view> -->
+<view class="container">
+  <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}">1</ec-canvas>
+  
+</view>
+<!-- <ec-canvas id="mychart-dom-scatter" canvas-id="mychart-scatter" ec="{{ ec1 }}">2</ec-canvas> -->
+<button bindtap="update">上传</button>
+<loading hidden="{{hiddenall}}">上传数据中...</loading>

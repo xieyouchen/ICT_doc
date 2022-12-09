@@ -1,0 +1,35 @@
+<!-- <button bindtap="cloudgetdata">
+获取数据
+</button> -->
+<view class="first_tab" wx:for="{{users}}" data-index="{{index}}">
+    <view class="goods_item" >
+        <!-- 左侧图片 -->
+        <navigator class="goods_img_wrap" url="/pages/detail/detail?id={{item._id}}&user={{user}}&mylikes={{my_likes[index]}}&mycollects={{my_collects[index]}}" open-type="navigate">
+            <image src="{{item.downloadimgs[0]}}" mode="widthFix" style="max-height: 150px;min-height: 130px;">
+            	<image :src="{{item.downloadimgs[0]}}?{{item.downloadimgs[0]}}:''"></image>
+            </image>
+        </navigator>
+        <!-- 右侧 -->
+        <view class="goods_info_wrap">
+            <view class="goods_name">{{item.text}}</view>
+            <view class="goods_price">{{item.userinfo.nickName}}</view>
+            <view class="comment">
+            <!-- <image class="icon" src="../../icon/shoub.png" bindtap="ClickMe"></image>
+            <image class="icon" src="../../icon/zanb.png" bindtap="ClickMe1">
+                </image> -->
+                <view class="like">
+                <view class="iconfont icon-dianzan {{my_likes[index]?'active':'icon'}}" bindtap="my_likes" data-index="{{index}}"></view>
+                <view class="p">{{item.likes}}</view>
+            </view>
+            <view class="collect">
+                <view class="iconfont icon-shoucang2 {{my_collects[index]?'active':'icon'}}"  bindtap="my_collects" data-index="{{index}}"></view>
+                <view class="p">{{item.collects}}</view>
+            </view>
+            <view class="like">
+                <view class="iconfont icon-pinglun1 icon"></view>
+                <view class="p">{{item.comments}}</view>
+            </view>
+            </view>
+        </view>
+    </view>
+</view>

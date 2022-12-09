@@ -1,0 +1,8 @@
+<!--component/cates/cates.wxml-->
+<!-- <text>component/cates/cates.wxml</text> -->
+<view class="cates_container">
+    <view url="../../pages/cs/cs" class="cates_item {{item.isActive?'active':''}}" wx:for="{{cates}}" wx:key="id" data-index="{{index}}" bindtap="handlecateitem">
+        {{item.name}}
+        <!-- <text class="iconfont {{item.id===0?'icon-zuijinliulan':''}} {{item.id===1?'icon-xihuan':''}} {{item.id===2?'icon-zhujian':''}}"></text> -->
+    </view>
+</view>

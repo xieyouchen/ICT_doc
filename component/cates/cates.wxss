@@ -1,0 +1,53 @@
+/* component/cates/cates.wxss */
+
+.cates_container {
+    height: 40px;
+    display: flex;
+    padding: 10rpx;
+}
+
+.cates_item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #a5b5bd;
+    opacity: 0.4;
+    margin-right: 8px;
+    animation: move1 4s infinite Linear;
+}
+
+@keyframes move1 {
+    0% {
+        transform: rotateY(0deg);
+    }
+    10% {
+        transform: rotateY(15deg);
+    }
+    20% {
+        transform: rotateY(30deg);
+    }
+    30% {
+        transform: rotateY(15deg);
+    }
+    40% {
+        transform: rotateY(0deg);
+    }
+    90% {
+        transform: rotateY(-15deg);
+    }
+    80% {
+        transform: rotateY(-30deg);
+    }
+    70% {
+        transform: rotateY(-15deg);
+    }
+    60% {
+        transform: rotateY(0deg);
+    }
+}
+
+.active {
+    opacity: 1;
+}

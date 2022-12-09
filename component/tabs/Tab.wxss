@@ -1,0 +1,20 @@
+/* component/tabs/Tab.wxss */
+
+@import "../../styles/iconfont.wxss";
+.tab_title {
+    height: 40px;
+    display: flex;
+    padding: 10rpx;
+}
+
+.title_item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active {
+    color: #3366CC;
+    border-bottom: 10rpx solid #3366CC;
+}

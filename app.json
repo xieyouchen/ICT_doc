@@ -1,0 +1,70 @@
+{
+    "pages": [
+        "pages/login/login",
+        "pages/detailA/detailA",
+        "pages/ec-try/ec-try",
+        "pages/data/data",
+        "pages/index/index",
+        "pages/detail/detail",
+        "pages/goods_list/goods_list",
+        "pages/catelog/catelog",
+        "pages/service/service",
+        "pages/characteristic/characteristic",
+        "pages/com/com",
+        "pages/search/search",
+        "pages/search1/search1",
+        "pages/search2_doc/search2_doc",
+        "pages/logs/logs",
+        "pages/chat/chat"
+    ],
+    "tabBar": {
+      "color": "#7A7E83",
+      "selectedColor": "#3cc51f",
+      "borderStyle": "black",
+      "backgroundColor": "#ffffff",
+      "list": [
+        {
+          "pagePath": "pages/index/index",
+          "iconPath": "icon/news.png",
+          "selectedIconPath": "icon/news.png",
+          "text": "监测"
+        },
+        {
+          "pagePath": "pages/catelog/catelog",
+          "iconPath": "icon/patient_list.png",
+          "selectedIconPath": "icon/patient_list.png",
+          "text": "档案"
+        },
+        {
+          "pagePath": "pages/search/search",
+          "iconPath": "icon/ask_doctor.png",
+          "selectedIconPath": "icon/ask_doctor.png",
+          "text": "咨询"
+        },
+        {
+          "pagePath": "pages/login/login",
+          "iconPath": "icon/member_center.png",
+          "selectedIconPath": "icon/member_center.png",
+          "text": "个人中心"
+        }
+      ]
+    },
+    "window": {
+        "navigationBarTitleText": "肺功能训练监测",
+        "navigationBarBackgroundColor":"#1818A7",
+        "navigationBarTextStyle": "white",
+        "enablePullDownRefresh": true,
+        "backgroundColor": "#F8F7EE"
+    },
+    "subPackages": [
+        {
+          "root": "packageA",
+          "pages": [
+            "pages/chat/chat",
+            "pages/detail/detail"
+          ]
+        }
+    ],
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}

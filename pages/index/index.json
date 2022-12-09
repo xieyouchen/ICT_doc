@@ -1,0 +1,7 @@
+{
+    "usingComponents": {
+        "Tab": "../../component/tabs/Tab",
+        "SINPUT": "../../component/SearchInput/SINPUT",
+        "cates": "../../component/cates/cates"
+    }
+}
