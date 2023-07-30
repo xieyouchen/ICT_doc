@@ -66,8 +66,12 @@ Page({
   customData: {
     _devs: []
   },
+  Debug(name, content) {
+    console.log(name)
+    console.log(content)
+  },
   itemChange(e) {
-    //console.log(e);
+    this.Debug("选择的蓝牙信息", e)
     const {
       index
     } = e.detail;
@@ -182,7 +186,7 @@ Page({
         })
       },
       fail(res) {
-        console.log("查询失败", res)
+        console.log("数据库访问查询失败", res)
       }
     })
   },
@@ -196,9 +200,6 @@ Page({
           name: "蓝牙连接",
           isactive: true
         }]
-
-        // ['tabs[0].name']:'蓝牙连接',
-        // ['tabs[1].name']:'数据获取'
       })
     }
     this.setData({
@@ -256,6 +257,7 @@ Page({
       },
       fail: function (err) {
         // console.log('search.js[onLoad]: openBluetoothAdapter fail')
+        self.Debug("err.errCode when openBluetoothAdapter fail in 蓝牙模块初始化", err)
         if (err.errCode === 10001) { // 手机蓝牙未开启
           app.globalData.BluetoothState = false
           wx.showLoading({
@@ -335,9 +337,9 @@ Page({
     })
   },
   onShow: function () {
-    this.get_data({
-      theflag: app.globalData.haveFlag
-    });
+    // this.get_data({
+    //   theflag: app.globalData.haveFlag
+    // });
   },
   onHide: function () {
     app.stopSearchDevs()
@@ -363,9 +365,14 @@ Page({
   startSearchDevs: function () {
     const self = this
     wx.startBluetoothDevicesDiscovery({ // 开启搜索
+      // 不允许重复上报同一设备
+      // services: ['A52D3A26-AC88-FD59-F9CC-72A9577DA478'],
       allowDuplicatesKey: false,
       success: function (res) {
+        console.log(res)
+        // 监听搜索到新设备的事件
         wx.onBluetoothDeviceFound(function (devices) {
+          console.log(devices)
           var isExist = false
           if (devices.deviceId) {
             for (let item of self.customData._devs) {
@@ -399,6 +406,10 @@ Page({
             })
           }
         })
+      },
+      fail: (res) => {
+        console.log("startBluetoothDevicesDiscovery() 调用失败返回")
+        console.log(res)
       }
     })
   },
@@ -420,6 +431,7 @@ Page({
   },
   connect(event) {
     if (app.globalData.BluetoothState) {
+      this.Debug("dev in connect()", event.currentTarget.dataset.dev)
       const deviceId = event.currentTarget.dataset.dev.deviceId
       const deviceName = event.currentTarget.dataset.dev.name
       wx.showLoading({

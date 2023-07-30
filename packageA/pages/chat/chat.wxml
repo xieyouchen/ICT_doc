@@ -10,7 +10,7 @@
 <!--聊天内容-->
 <scroll-view scroll-y="true" class='padding20' style="height:1000rpx;width:auto; padding-bottom:{{isShowModelUp==true?'448':'100'}}rpx;"> 
     <block wx:for="{{chatList}}" wx:key="key">
-      <view class='weui-flex mb20' wx:if="{{item.time}}">
+      <view class='weui-flex mb20' wx:if="{{item.time && item.showTime}}">
         <text class='chat_time'>{{item.time}}</text>
       </view>
       <view class="weui-flex mb20 {{item.isAdmin==true?'weui-flex_juscon_end':'chat_list_user'}}"> 
@@ -30,7 +30,7 @@
           <icon class="iconfont pa {{item.isAdmin==true?'icon-sanjiaoxing-right':'icon-sanjiaoxing-left'}}"></icon>
         </view> 
          <!--对方发出的内容-->
-        <image wx:if="{{item.isAdmin==true}}" src='{{item.userImage}}' class='user_img img_chat'></image>
+        <image wx:if="{{item.isAdmin==true}}" src='{{item.avatarUrl}}' class='user_img img_chat'></image>
       </view>
     </block> 
     <view id='bottom' hidden=''></view>

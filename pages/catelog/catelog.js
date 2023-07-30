@@ -1,9 +1,6 @@
 // pages/catelog/catelog.js
-var localData = require("../catelog/data.js");
-var p_localData = require("../catelog/p_data.js");
 const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -101,7 +98,6 @@ Page({
           'FEV1': 2,
           'PEF': 3,
           'PEFR': 4
-
         }]
       }
     ]
@@ -117,43 +113,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const Cates = wx.getStorageSync("cates");
-    if (!Cates) {
-      this.Cates = localData.dataList;
-      wx.setStorageSync("cates", {
-        time: Date.now(),
-        data: this.Cates
-      });
-      // let left_list = localData.dataList.map(v => v.cat_name);
-      let right_content = localData.dataList[0].children;
-      this.setData({
-        left_list,
-        right_content
-      })
-    } else {
-      if (Date.now() - Cates.time > 1000 * 10) {
-        this.Cates = localData.dataList;
-        wx.setStorageSync("cates", {
-          time: Date.now(),
-          data: this.Cates
-        });
-        let left_list = localData.dataList.map(v => v.cat_name);
-        let right_content = localData.dataList[0].children;
-        this.setData({
-          left_list,
-          right_content
-        })
-      } else {
-        this.Cates = localData.dataList;
-        // wx.setStorageSync("cates", { time: Date.now(), data: this.Cates });
-        let left_list = localData.dataList.map(v => v.cat_name);
-        let right_content = localData.dataList[0].children;
-        this.setData({
-          left_list,
-          right_content
-        })
-      }
-    }
     let left_list = ['2022.11.28', '2022.11.29', '2022.11.30']
     this.setData({
       left_list

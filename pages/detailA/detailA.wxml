@@ -1,42 +1,69 @@
+<view class="under_factors">
+  <view class="bg-h">
+    {{detail.year}}-{{detail.month}}-{{detail.day}}呼气指标
+  </view>
+  <view class="tr bg-w">
+    <view class="th">时间段</view>
+    <view class="th">FEV1(L)</view>
+    <view class="th">PEF(L/min)</view>
+    <view class="th ">PEFR(%)</view>
+  </view>
+  <scroll-view scroll-y class="table" style="height:25%" scroll-into-view="{{toView}}" scroll-with-animation="true">
+    <block wx:for="{{detail_factors}}" wx:key="{{index}}">
+      <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+        <view class="td">{{item.tag}}</view>
+        <view class="td">{{item.data[0]}}</view>
+        <view class="td">{{item.data[1]}}</view>
+        <view class="td">{{item.data[2]}}</view>
 
+      </view>
+      <view class="tr" wx:else>
+        <view class="td">{{item.tag}}</view>
+        <view class="td">{{item.data[0]}}</view>
+        <view class="td">{{item.data[1]}}</view>
+        <view class="td">{{item.data[2]}}</view>
+      </view>
+    </block>
+    <view id="toView"></view>
+  </scroll-view>
+</view>
 <view class="container">
-    <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
-    <!-- <ec-canvas id="mychart-dom-scatter" canvas-id="mychart-scatter" ec="{{ ec1 }}">2</ec-canvas> -->
-  </view>
+  <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+  <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ecSum }}"></ec-canvas>
+  <!-- <ec-canvas wx:if="{{show}}" id="mychart-dom-scatter" canvas-id="mychart-scatter" ec="{{ ec1 }}"></ec-canvas> -->
+</view>
+
 <view class="under">
-  <view class="bg-h">{{detail.year}}-{{detail.month}}-{{detail.day}}具体数据</view>
-<view class="tr bg-w">
-  <view class="th">时间段</view>
-  <view class="th">第0.5s</view>
-  <view class="th">第1.0s</view>
-  <view class="th ">第1.5s</view>
-  <view class="th">第2.0s</view>
-  <view class="th ">第2.5s</view>
-  <view class="th ">第3.0s</view>
+  <view class="bg-h">
+    {{detail.year}}-{{detail.month}}-{{detail.day}}呼气总量数据
   </view>
-  
-  
-<scroll-view scroll-y class="table" style="height:20%" scroll-into-view="{{toView}}" scroll-with-animation="true">
-  <block wx:for="{{detail.today}}" wx:key="{{index}}">
-  <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
-  <view class="td">{{item.tag}}</view>
-  <view class="td">{{item.data[0]}}</view>
-  <view class="td">{{item.data[1]}}</view>
-  <view class="td">{{item.data[2]}}</view>
-  <view class="td">{{item.data[3]}}</view>
-  <view class="td">{{item.data[4]}}</view>
-  <view class="td">{{item.data[5]}}</view>
+  <view class="tr bg-w">
+    <view class="th">时间段</view>
+    <view class="th">第0.2s</view>
+    <view class="th">第0.4s</view>
+    <view class="th ">第0.6s</view>
+    <view class="th">第0.8s</view>
+    <view class="th ">第1.0s</view>
   </view>
-  <view class="tr" wx:else>
-    <view class="td">{{item.tag}}</view>
-  <view class="td">{{item.data[0]}}</view>
-  <view class="td">{{item.data[1]}}</view>
-  <view class="td">{{item.data[2]}}</view>
-  <view class="td">{{item.data[3]}}</view>
-  <view class="td">{{item.data[4]}}</view>
-  <view class="td">{{item.data[5]}}</view>
-  </view>
-  </block>
-  <view id="toView" ></view>
- </scroll-view>
+  <scroll-view scroll-y class="table" style="height:25%" scroll-into-view="{{toView}}" scroll-with-animation="true">
+    <block wx:for="{{detail.today}}" wx:key="{{index}}">
+      <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+        <view class="td">{{item.tag}}</view>
+        <view class="td">{{item.data[1]}}</view>
+        <view class="td">{{item.data[2]}}</view>
+        <view class="td">{{item.data[3]}}</view>
+        <view class="td">{{item.data[4]}}</view>
+        <view class="td">{{item.data[5]}}</view>
+      </view>
+      <view class="tr" wx:else>
+        <view class="td">{{item.tag}}</view>
+        <view class="td">{{item.data[1]}}</view>
+        <view class="td">{{item.data[2]}}</view>
+        <view class="td">{{item.data[3]}}</view>
+        <view class="td">{{item.data[4]}}</view>
+        <view class="td">{{item.data[5]}}</view>
+      </view>
+    </block>
+    <view id="toView"></view>
+  </scroll-view>
 </view>

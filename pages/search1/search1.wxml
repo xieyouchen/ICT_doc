@@ -1,5 +1,0 @@
-
-  
-  <input class="input" placeholder="请输入信息" bindinput="getContent" value="{{content}}"></input>
-  <button type="primary" bindtap="fabiao">发送信息</button>
-  

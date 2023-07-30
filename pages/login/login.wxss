@@ -198,11 +198,6 @@ page {
   border-radius: 50%;
 }
 
-.userinfo-nickname {
-  margin-top: 30rpx;
-  color: #aaa;
-}
-
 .usermotto {
   margin-top: 200px;
 }

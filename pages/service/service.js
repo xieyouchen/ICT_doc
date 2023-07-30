@@ -17,11 +17,16 @@ Page({
     deviceId: '',
     services: []
   },
+  Debug(name, content) {
+    console.log(name)
+    console.log(content)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     const self = this
+    this.Debug("options of bluetooth device in service.js", options)
     this.customData.deviceId = options.deviceId
     this.customData.deviceName = options.deviceName
     this.setData({

@@ -1,7 +1,0 @@
-{
-    "usingComponents": {
-        "SHOWIMG":"../../../component/SHOWIMG/SHOWIMG",
-        "ec-canvas":"../../../ec-canvas/ec-canvas"
-    },
-    "navigationBarTitleText": "详情"
-}

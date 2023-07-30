@@ -58,8 +58,7 @@
     
     <Tab tabs="{{tabs}}" binditemchange="itemChange">
         <!-- 蓝牙连接 -->
-        <block wx:if="{{tabs[0].isactive}}">
-            
+        <block wx:if="{{tabs[0].isactive}}">         
                 <scroll-view scroll-y style="height:60%" class="scroll">
                     <view wx:for="{{devs}}" class="item" data-dev="{{item}}" data-name="{{item.name}}" bindtap="connect" wx:if="{{item.name!=''}}" >
                       <view class="rss" >RSSI：{{item.RSSI}}</view>

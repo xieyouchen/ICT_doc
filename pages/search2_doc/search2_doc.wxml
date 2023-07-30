@@ -1,2 +1,0 @@
-<!--pages/search2_doc/search2_doc.wxml-->
-<button bindtap="toChat">Contact</button>

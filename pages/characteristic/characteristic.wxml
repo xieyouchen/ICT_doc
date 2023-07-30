@@ -2,6 +2,6 @@
   <p>DeviceName：<b class="name">{{name}}</b></p>
   <div class="type">Characteristic UUID</div>
 </view>
-<view wx:for="{{characteristic}}" class="item" data-characteristicId="{{item.uuid}}" data-properties="{{item.properties}}" bindtap="operation">
-  下一步
+<view wx:for="{{characteristic}}" class="item" wx:if="{{index==5}}" data-characteristicId="{{item.uuid}}" data-properties="{{item.properties}}" bindtap="operation">
+  服务
 </view>
