@@ -103,7 +103,8 @@ Page({
     return h + ':' + minute;
     // return y + '-' + m + '-' + d;
   },
-  getMessage() {
+
+  watchMessage() {
     let anOtherID = this.data.to
     // let myOpenID = this.getOpenID()
     let myOpenID = this.data.mine
@@ -116,52 +117,52 @@ Page({
           from: anOtherID,
           to: myOpenID
         }])
-      ).get()
-      .then(res => {
-        console.log("她的数据", res)
-        let messageList = res.data
-        if(messageList.length == this.data.chatList.length) return
+      )
+      .watch({
+        onChange: function (snapshot) {
+          let messageList = snapshot.docs
+          // 拿到全部消息的数组
+          if (messageList.length == that.data.chatList.length) return
+          messageList.sort(that.compareFn)
+          messageList[0].showTime = true
+          for (let i = 0; i < messageList.length; i++) {
+            // 修改显示的时间
+            let time = messageList[i].time
+            let date = new Date(time)
+            time = date.getTime()
+            messageList[i].time = that.js_date_time(time)
+            // 判断显示在左边还是右边
+            if (messageList[i]['from'] === myOpenID) messageList[i]['isAdmin'] = true
+            else messageList[i]['isAdmin'] = false
 
-        messageList.sort(that.compareFn)
-        messageList[0].showTime = true
-        for (let i = 0; i < messageList.length; i++) {
-          // 修改显示的时间
-          let time = messageList[i].time
-          let date = new Date(time)
-          time = date.getTime()
-          messageList[i].time = that.js_date_time(time)
-          // 判断显示在左边还是右边
-          if (messageList[i]['from'] === myOpenID) messageList[i]['isAdmin'] = true
-          else messageList[i]['isAdmin'] = false
-
-          // 添加用户的头像 userImage 和 imgUrl
-          let mine = wx.getStorageSync('userInfo')
-          messageList[i].avatarUrl = mine.avatarUrl
-          db.collection('users').where({
-              open_ID: anOtherID
-            }).get()
-            .then(res => {
-              let data = res.data[0]
-              messageList[i].userImage = data.avatarUrl
-              that.setData({
-                chatList: messageList
+            // 添加用户的头像 userImage 和 imgUrl
+            let mine = wx.getStorageSync('userInfo')
+            messageList[i].avatarUrl = mine.avatarUrl
+            db.collection('users').where({
+                open_ID: anOtherID
+              }).get()
+              .then(res => {
+                let data = res.data[0]
+                messageList[i].userImage = data.avatarUrl
+                that.setData({
+                  chatList: messageList
+                })
+                that.pageScrollToBottom()
               })
-              that.pageScrollToBottom()
-            })
-
-          // 事件显示与否
-          if (i == 0) continue
-          messageList[i].showTime = messageList[i].time - messageList[i - 1].time > 300000
+            // 事件显示与否
+            if (i == 0) continue
+            messageList[i].showTime = messageList[i].time - messageList[i - 1].time > 300000
+          }
+        },
+        onError: function (err) {
+          console.error('the watch closed because of error', err)
         }
-
       })
-      
   },
   onLoad: function (options) {
     console.log("options in chat.js of packageA", options)
     var id = options.id;
-    this.getMessage()
-    setInterval(this.getMessage, 3000)
+    this.watchMessage()
   },
   //打开底部弹框
   showModelUp: function () {
@@ -193,14 +194,11 @@ Page({
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         var tempFilePath = res.tempFilePaths[0];
-        console.log("temp 图片", tempFilePath)
         let time = that.js_date_time_pic(new Date())
-        console.log("time ", time)
         wx.cloud.uploadFile({
           cloudPath: 'chatImage/' + time + '.png', // 上传至云端的路径
           filePath: tempFilePath, // 小程序临时文件路径
           success: res => {
-            console.log("上传云端成功", res);
             var img_path = res.fileID;
             that.addMessageToNews("", img_path, "")
           },
@@ -331,7 +329,7 @@ Page({
         success: res => {
           console.log("上传云端成功", res);
           var img_path = res.fileID;
- 
+
           that.addMessageToNews("", "", img_path)
         },
         fail: () => {
@@ -388,7 +386,6 @@ Page({
         anotherId: userId
       }])).get()
       .then(res => {
-        console.log("res in updateLatestNews()", res)
         let data = res.data
         if (data.length > 0) {
           db.collection('latestNews').where({
@@ -417,23 +414,23 @@ Page({
     let from = this.data.mine
     let to = this.data.to
     db.collection('news').add({
-      data: {
-        from: from,
-        to: to,
-        time: new Date(),
-        text: text,
-        imgUrl,
-        audioUrl
-      }
-    })
-    .then(res => {
-      that.setData({
-        inputValue: '' //清空输入框
+        data: {
+          from: from,
+          to: to,
+          time: new Date(),
+          text: text,
+          imgUrl,
+          audioUrl
+        }
       })
-      that.pageScrollToBottom();
-      // 更新最新消息
-      that.updateLatestNews(res._id, from, to)
-    })
+      .then(res => {
+        that.setData({
+          inputValue: '' //清空输入框
+        })
+        that.pageScrollToBottom();
+        // 更新最新消息
+        that.updateLatestNews(res._id, from, to)
+      })
   },
   //输入框点击完成按钮时触发
   btnConfirm: function (e) {

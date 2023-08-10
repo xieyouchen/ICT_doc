@@ -1,6 +1,5 @@
 {
-    "usingComponents": {
-        "Tab": "../../component/tabs/Tab",
-        "SINPUT": "../../component/SearchInput/SINPUT"
-    }
+  "usingComponents": {
+    "Tab": "../../component/tabs/Tab"
+  }
 }

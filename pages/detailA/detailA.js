@@ -1,69 +1,15 @@
 import * as echarts from '../../ec-canvas/echarts';
 
-const app = getApp();
-// const tmpdata=app.globalData.look;
-// console.log(tmpdata)
-// const today=tmpdata.today;
-// const mytitle=String(tmpdata.year)+"-"+String(tmpdata.month)+"-"+String(tmpdata.day);
-// const mylengend=[];
-// const color_list=["#37A2DA", "#67E0E3", "#9FE6B8"];
-// const mycolor=[];
-// const myseries=[];
-// console.log("today",today)
-// if(today!=null)
-// for(var i=0;i<today.length;i++)
-// {
-//   var tmp={};
-//   tmp["name"]=today[i].tag;
-//   tmp["type"]='line';
-//   tmp["smooth"]=true;
-//   tmp["data"]=today[i].data;
-//   myseries.push(tmp);
-//   mylengend.push(today[i].tag);
-//   mycolor.push(color_list[i])
-// }
-// console.log("mylengend:",mylengend)
-let data1 = [
-  [1, 2, 3, 4, 5],
-  [6, 6, 8, 9, 10]
-];
-let data2 = [
-  [1, 2, 3, 4, 5],
-  [6, 6, 8, 9, 10]
-];
-const myseries_Sum = [];
-function getMyseries_Sum() {
-  let myseries_Sum = [];
-  let app = getApp()
-  const tmpdata = app.globalData.look;
-  const today = tmpdata.today;
-  if (today != null)
-    for (var i = 0; i < today.length; i++) {
-      var tmp = {};
-      tmp["name"] = today[i].tag;
-      tmp["type"] = 'line';
-      tmp["smooth"] = true;
-      let data_sum = [0]
-      let dataTmp = today[i].data
-      for(let i = 2 ; i < dataTmp.length ; i++) {
-        let num = dataTmp[i] - dataTmp[i-1]
-        num = parseInt(num/0.045 * 15)
-        data_sum.push(num)
-      }
-      tmp["data"] = data_sum;
-      myseries_Sum.push(tmp);
-      return myseries_Sum
-}}
+let app = getApp();
+let myseries_Sum = [];
+
 function initChartSum(canvas, width, height, dpr) {
   const tmpdata = app.globalData.look;
-  console.log("tmpData: #####")
-  console.log(tmpdata)
   const today = tmpdata.today;
-  const mytitle = String(tmpdata.year) + "-" + String(tmpdata.month) + "-" + String(tmpdata.day);
   const mylengend = [];
   const color_list = ["#37A2DA", "#67E0E3", "#9FE6B8"];
   const mycolor = [];
-  console.log("today", today)
+  myseries_Sum = []
   if (today != null)
     for (var i = 0; i < today.length; i++) {
       var tmp = {};
@@ -72,29 +18,22 @@ function initChartSum(canvas, width, height, dpr) {
       tmp["smooth"] = true;
       let data_sum = [0]
       let dataTmp = today[i].data
-      for(let i = 2 ; i < dataTmp.length ; i++) {
-        let num = dataTmp[i] - dataTmp[i-1]
-        num = parseInt(num/0.045 * 15)
+      for (let i = 2; i < dataTmp.length; i++) {
+        let num = dataTmp[i] - dataTmp[i - 1]
+        num = parseInt(num / 0.045 * 15)
         data_sum.push(num)
-        console.log("num in detailA.js", num)
       }
       tmp["data"] = data_sum;
       myseries_Sum.push(tmp);
-      console.log("###########", myseries_Sum)
       mylengend.push(today[i].tag);
       mycolor.push(color_list[i])
     }
-    console.log("myseries_Sum", myseries_Sum)
-  console.log("mylengend:", mylengend)
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
     devicePixelRatio: dpr // new
   });
   canvas.setChart(chart);
-  var A = data1;
-  var B = data2;
-  console.log("A:", A, "B:", B)
   var option = {
     color: mycolor,
     legend: {
@@ -143,17 +82,14 @@ function initChartSum(canvas, width, height, dpr) {
   chart.setOption(option);
   return chart;
 }
+
 function initChart(canvas, width, height, dpr) {
   const tmpdata = app.globalData.look;
-  console.log("tmpData: #####")
-  console.log(tmpdata)
   const today = tmpdata.today;
-  const mytitle = String(tmpdata.year) + "-" + String(tmpdata.month) + "-" + String(tmpdata.day);
   const mylengend = [];
   const color_list = ["#37A2DA", "#67E0E3", "#9FE6B8"];
   const mycolor = [];
   const myseries = [];
-  console.log("today", today)
   if (today != null)
     for (var i = 0; i < today.length; i++) {
       var tmp = {};
@@ -165,16 +101,12 @@ function initChart(canvas, width, height, dpr) {
       mylengend.push(today[i].tag);
       mycolor.push(color_list[i])
     }
-  console.log("mylengend:", mylengend)
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
     devicePixelRatio: dpr // new
   });
   canvas.setChart(chart);
-  var A = data1;
-  var B = data2;
-  console.log("A:", A, "B:", B)
   var option = {
     color: mycolor,
     legend: {
@@ -327,57 +259,73 @@ Page({
       onInit: initChartSum
     }
   },
-  switchLineChart() {
-    console.log("now switch")
-    initChart()
-  },
-  getPEFR(todayData) {
+  getPEFR(todayData, cnt) {
     let arr_pef = []
-    console.log(todayData)
-    todayData.forEach(e => {
-      arr_pef.push(this.max(e.data))
-    })
-    console.log(arr_pef)
+    for(let i = 0 ; i < cnt ; i++) {
+      arr_pef.push(this.max(todayData[i].data))
+    }
     let max = this.max(arr_pef)
     let min = this.min(arr_pef)
-    let res = 2*(max-min)/(max+min) * 100
+    let res = 2 * (max - min) / (max + min) * 100
+    res = parseFloat(res.toFixed(2))
     return res
   },
   max(arrData) {
-    console.log("arrData in max()", arrData)
     let pef = 0
-    arrData.sort()
-    pef = arrData[arrData.length-1]
+    arrData.sort((a,b) => {return a-b})
+    pef = arrData[arrData.length - 1]
     return pef
   },
   min(arrData) {
     let pef = 0
-    arrData.sort()
+    arrData.sort((a,b) => {return a-b})
     pef = arrData[0]
     return pef
   },
+  // 计算PEF肺活量值用的数组数据，用得到的吹气数据，两个数据之差作为每个时间段的PEF
+  getMyseries_Sum() {
+    let myseries_Sum = [];
+    let app = getApp()
+    const tmpdata = app.globalData.look;
+    const today = tmpdata.today;
+    if (today != null)
+      for (var i = 0; i < today.length; i++) {
+        var tmp = {};
+        tmp["name"] = today[i].tag;
+        tmp["type"] = 'line';
+        tmp["smooth"] = true;
+        let data_sum = [0]
+        let dataTmp = today[i].data
+        for (let i = 2; i < dataTmp.length; i++) {
+          let num = dataTmp[i] - dataTmp[i - 1]
+          num = parseInt(num / 0.045 * 15)
+          data_sum.push(num)
+        }
+        tmp["data"] = data_sum;
+        myseries_Sum.push(tmp);
+      }
+    return myseries_Sum
+  },
   getFactors(todayData) {
     let detail_factors = []
-    let myseries_Sum = getMyseries_Sum()
-    console.log("myseries_Sum in detailA.js", myseries_Sum)
-    let pefr = this.getPEFR(myseries_Sum)
-    for(let i = 0 ; i < todayData.length ; i++) {
+    // 肺活量峰值，L/min
+    let myseries_Sum = this.getMyseries_Sum()
+    console.log("myseries_Sum in getFactors()", myseries_Sum)
+    // 以下得到 detail_factor，最后的渲染数据
+    for (let i = 0; i < todayData.length; i++) {
       let e = todayData[i]
-      console.log(i, e.data.length)
-      if(e.data.length == 1) break
+      // 如果是中午或者晚上数据为空，那么就跳出循环
+      if (e.data.length == 1) break
       let dataTmp = e.data
-      let fev1 = dataTmp[dataTmp.length-1] - dataTmp[0]
+      let fev1 = dataTmp[dataTmp.length - 1] - dataTmp[0]
       let morning_Or_noon_Or_night = myseries_Sum[i]
+      console.log("早或中或晚的数据", morning_Or_noon_Or_night)
       let pef = ""
-      if(!morning_Or_noon_Or_night) {
-        pef = 463
-        pefr = 2*(463-373)/(463+373) * 100
-        pefr = parseFloat(pefr.toFixed(2))
-      }
-      if(morning_Or_noon_Or_night) {
+      // 计算 pefr
+      let pefr = this.getPEFR(myseries_Sum, i+1)
+      if (morning_Or_noon_Or_night) {
         let arrData = myseries_Sum[i].data
         pef = this.max(arrData)
-        console.log(pef)
       }
       let tag = e.tag
       let data = []
@@ -388,20 +336,18 @@ Page({
         tag,
         data
       })
-      console.log("data", data)
     }
-    console.log("detail_factors", detail_factors)
     this.setData({
       detail_factors
     })
   },
   onLoad: function () {
     let app = getApp()
+    // 翻转 .look 内的数据
     this.setData({
       detail: app.globalData.look
     })
     this.getFactors(this.data.detail.today)
-    console.log("detail:", this.data.detail.today[1])
   },
   onReady() {}
 });

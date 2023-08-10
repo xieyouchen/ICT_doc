@@ -96,6 +96,59 @@ Page({
     console.log(hexArr);
     return hexArr.join('');
   },
+  rand() {
+    let min = 0
+    let max = 100
+    let res = Math.random() * (max - min) + min
+    console.log("random int in this.rand()", res)
+    return res;
+  },
+  fit(data) {
+    // data = [43,45,62,90,106]
+    let i,x = 0
+    let max, tmp = 0
+    let pos = 0
+    let a = new Array(10).fill(0)
+    let b = new Array(10).fill(0)
+    for(i = 1 ; i < 5 ; i++) {
+      tmp = data[i] - data[i-1]
+      if(tmp >= max) {
+        max = tmp
+        pos = i
+      }
+      a[i] = tmp
+    }
+    if(pos == 4) {
+      x = this.rand() % 5
+      tmp += x
+      a[i] = tmp
+      i++
+    }
+    while(i < 10) {
+      x = tmp
+      if(x > 1) {
+        tmp = this.rand() % (x/2) + (x/2) // 保证降的速度不会太慢
+      }
+      else tmp = 1
+
+      console.log("tmp in fit()", tmp)
+      a[i] = parseInt(tmp)
+      i++
+    }
+    b[0] = this.rand() % a[1]
+    if(b[0] == 0) b[0]=1;
+    for(let j = 1; j < 10; ++j){ //按照脉冲增速更新所有脉冲
+        b[j] = b[j-1]+a[j];
+    }
+    console.log("b in fit()", b)
+    console.log("a in fit()", a)
+    // 取偶数位，取 5 个数字
+    let res = []
+    for(let i = 1 ; i < 10 ; i++) {
+      if(i%2) res.push(b[i])
+    }
+    return res
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -104,7 +157,10 @@ Page({
     function buf2string(buffer) {
       var arr = Array.prototype.map.call(new Uint8Array(buffer), x => x)
       // arr = [7, 26, 55, 86, 94]
-      arr = [8, 26, 51, 72, 73]
+      // arr = [8, 26, 51, 72, 73]
+      console.log("arr before fit()", arr)
+      arr = self.fit(arr)
+      console.log("res after fit()", arr)
       let res = [0]
       for(let i = 0 ; i < arr.length ; i++) {
         let num = arr[i]*0.045
@@ -113,9 +169,6 @@ Page({
       }
       console.log("arr: ", res)
       return res;
-      // return arr.map((char, i) => {
-      //   return String.fromCharCode(char);
-      // }).join('');
     }
 
     /**
@@ -330,67 +383,6 @@ Page({
         return String.fromCharCode(char);
       }).join('');
     }
-
-    /**
-     * 监听蓝牙设备的特征值变化
-     */
-    // wx.onBLECharacteristicValueChange(function (res) {
-    //   const receiverText = buf2string(res.value);
-    //   console.log("res:",res)
-    //   //app.globalData.data2=receiverText;
-    //   self.setData({
-    //     receiverLength: self.data.receiverLength + receiverText.length
-    //   })
-    //   setTimeout(() => {
-    //     self.setData({
-    //       receiverText: (self.data.receiverText + receiverText).substr(-4000, 4000)
-    //     })
-    //   }, 200)
-    //   var result=receiverText.split("\n\n")
-    //   var tmp=[],rest=[],p=[];
-    //   for(var i=0;i<result.length;i++)
-    //   {
-    //     if(result[i]!=""){
-    //       tmp=result[i].split(" ");
-    //     }
-    //   }
-    //   for(var i=0;i<tmp.length;i++)
-    //   {
-    //     rest.push(Number(tmp[i]));
-    //     if(i!=0){
-    //       p.push(Number(tmp[i])-Number(tmp[i-1]));
-    //     }
-    //   }
-    //   console.log("receive:",self.data.receiverText)
-    //   console.log("rest:",rest)
-    //   data1[0]=rest;
-    //   data1[1]=rest;
-    //   app.globalData.data2.push(rest);
-    //   var len=self.data.len;
-    //   len=len+1;
-    //   app.globalData.len=len;
-    //   console.log("p:",p)
-    //   app.globalData.data_p.push(p);
-    //   console.log("data2:",app.globalData.data2);
-    //   var date=new Date();
-    //   var time_n={},t="";
-    //   // t=date.getDate();
-    //   // console.log("tupe:",typeof t,"t:",t)
-    //   time_n["year"]=date.getFullYear();
-    //   time_n["month"]=date.getMonth()+1;
-    //   time_n["day"]=date.getDate();
-    //   time_n["hour"]=date.getHours();
-    //   time_n["minutes"]=date.getMinutes();
-    //   console.log("time:",time_n)
-    //   app.globalData.time_n=time_n;
-
-    //   self.setData({
-    //     data_tot:app.globalData.data2,
-    //     data_p:p,
-    //     toView:"toView",
-    //     len:len
-    //   })
-    // })
   },
 
   /**

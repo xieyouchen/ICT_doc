@@ -76,11 +76,6 @@
                 </view>
             </view>
         </block>
-        <!-- <block wx:elif="{{tabs[2].isactive}}">
-            <cates cates="{{cates1}}" binditemchange="c_itemChange"></cates>
-        </block> -->
+
     </Tab>
-    <!-- <view class="write">
-        <view bindtap="to" class="to">每日监测</view>
-    </view> -->
 </view>

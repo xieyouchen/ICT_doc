@@ -80,6 +80,21 @@ Page({
     // a 一定等于 b
     return 0;
   },
+  watchAllData() {
+    let that = this
+    let id = wx.getStorageSync('open_ID')
+    db.collection('dataOneDay').where({
+        patientId: id
+      })
+      .watch({
+        onChange: function (snapshot) {
+          console.log('snapshot', snapshot)
+        },
+        onError: function (err) {
+          console.error('the watch closed because of error', err)
+        }
+      })
+  },
   getAllData() {
     let that = this
     let id = wx.getStorageSync('open_ID')
@@ -91,13 +106,12 @@ Page({
         let data = res.data
         data.sort(that.compareFn)
         // console.log("res of all data after sorting in login.js", data)
-        that.setData({
+        this.setData({
           dataAll: data
         })
-
         // 获得 img_time 的数据
         let img_time = []
-        for (let i = data.length - 1; i >= 0; i--) {
+        for (let i = 0; i <= data.length - 1; i++) {
           let time = that.getTimeSplice(data[i].time)
           img_time.push({
             img: data[i].img,
@@ -156,6 +170,7 @@ Page({
     let app = getApp()
     this.chooseP()
     // 获取该病人的每天数据，按照时间顺序从前往后
+    this.watchAllData()
     setInterval(this.getAllData, 3000)
     // this.getAllData()
     this.setData({
@@ -230,7 +245,7 @@ Page({
   nickNameInput(e) {
     console.log(e)
     // 不知道为什么，本地调试中返回的 nickName 在 e.detail.value.nickName，而真机调试在 e.detail.value
-    let nickName = e.detail.value.nickName? e.detail.value.nickName : e.detail.value
+    let nickName = e.detail.value.nickName ? e.detail.value.nickName : e.detail.value
     console.log("nickName in nickNameInput()", nickName)
     this.setData({
       nickName,
@@ -251,7 +266,7 @@ Page({
     var second = date.getSeconds();
     minute = minute < 10 ? ('0' + minute) : minute;
     second = second < 10 ? ('0' + second) : second;
-    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;//年月日时分秒
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second; //年月日时分秒
     // return h + ':' + minute;
     // return y + '-' + m + '-' + d;
   },
@@ -262,7 +277,7 @@ Page({
     // 将 avatar 存入云存储
     let date = new Date()
     let time = date.getTime()
-    time = this.js_date_time(time)  
+    time = this.js_date_time(time)
     console.log("time", time)
     wx.cloud.uploadFile({
       cloudPath: 'avatarUrl/' + time + '.png', // 上传至云端的路径

@@ -21,7 +21,7 @@
     </view>
     <block wx:if="{{toTabs==1&&flag==2}}">
       <scroll-view scroll-y class="scroll" style="height:42%">
-        <view class="first_tab" wx:for="{{img_time}}" data-index="{{index}}" bindtap="transfer">
+        <view class="first_tab" wx:for="{{img_time}}" wx:key="index" data-index="{{index}}" bindtap="transfer">
           <view class="check">
             <image class="check_image" src="{{item.img}}" mode="widthFix" style="max-height: 100px;min-height: 90px;"></image>
             <view class="check_text">
