@@ -2,7 +2,6 @@
 //获取应用实例
 var util = require('../../../utils/util.js');
 const app = getApp()
-const DB = wx.cloud.database().collection("IOT_Patient")
 const db = wx.cloud.database()
 //websocket心跳重连对象
 let heartCheck = {
@@ -38,7 +37,6 @@ const innerAudioContext = wx.createInnerAudioContext()
 
 
 Page({
-
   data: {
     taskId: '',
     userId: '',
@@ -51,8 +49,9 @@ Page({
     inputValue: '', //输入框内容
     lockReconnect: false, //默认进来是断开链接的
     limit: 0, //重连次数
-    to: "oTvD95KyTP9kIUG6eIGrNI_GDVpQ",
-    mine: "oTvD95GRhDLbf7pkJI-mcDCzWfTk"
+    to: "oTvD95KyTP9kIUG6eIGrNI_GDVpQ", 
+    mine: "",
+    scrollTop: 0 // 内容底部与顶部的距离
   },
   getOpenID() {
     let app = getApp()
@@ -162,6 +161,11 @@ Page({
   onLoad: function (options) {
     console.log("options in chat.js of packageA", options)
     var id = options.id;
+
+    let mine = wx.getStorageSync('open_ID')
+    this.setData({
+      mine
+    })
     this.watchMessage()
   },
   //打开底部弹框
@@ -208,20 +212,21 @@ Page({
         })
         //关闭弹窗
         that.closeModelUp();
-        that.pageScrollToBottom();
       }
     })
   },
   //界面滚到最底端
   pageScrollToBottom: function () {
-    // wx.createSelectorQuery().select('#bottom').boundingClientRect(function (rect) {
-    //   // console.log(rect.top);
-    //   // console.log(rect.bottom);
-    //   // 使页面滚动到底部
-    //   wx.pageScrollTo({
-    //     scrollTop: rect.bottom + 200
-    //   })
-    // }).exec()
+    // 设置屏幕自动滚动到最后一条消息处
+    wx.pageScrollTo({
+      selector: '#bottom', // 写法同css选择器
+      success: data => {
+        console.log('scroll success', data); // {errMsg: "pageScrollTo:ok"} 打印的日志信息就很迷惑，明明是操作成功，属性名却叫‘errMsg’
+      },
+      fail: data => {
+        console.log('scroll fail', data)
+      }
+    });
   },
   //预览图片
   previewImage: function (e) {
@@ -249,7 +254,6 @@ Page({
         })
         //关闭弹窗
         that.closeModelUp();
-        that.pageScrollToBottom();
       }
     })
   },
@@ -275,7 +279,6 @@ Page({
       }
     })
     that.closeModelUp();
-    that.pageScrollToBottom();
   },
   //切换是否录音按钮
   btnRecord: function () {
@@ -339,7 +342,6 @@ Page({
     })
     //关闭弹窗
     that.closeModelUp();
-    that.pageScrollToBottom();
   },
   //录音、停止播放
   playRecord: function (e) {
@@ -427,7 +429,6 @@ Page({
         that.setData({
           inputValue: '' //清空输入框
         })
-        that.pageScrollToBottom();
         // 更新最新消息
         that.updateLatestNews(res._id, from, to)
       })

@@ -1,10 +1,10 @@
 const app = getApp()
-var util = require('../../utils/util.js')
 const db = wx.cloud.database()
 const DB2 = wx.cloud.database().collection("IOT_Patient")
 import * as echarts from '../../ec-canvas/echarts';
 let len = app.globalData.len;
 let myseries_Sum = [];
+
 function initChart(canvas, width, height, dpr) {
   const chart = echarts.init(canvas, null, {
     width: width,
@@ -64,22 +64,21 @@ function initChart(canvas, width, height, dpr) {
       // show: false
     },
     series: [{
-        name: '早上',
-        type: 'line',
-        smooth: true,
-        data: A[0] //[18, 36, 65, 30, 78, 40, 33]
-      }, {
-        name: '中午',
-        type: 'line',
-        smooth: true,
-        data: A[1] // [12, 50, 51, 35, 70, 30, 20]
-      }, {
-        name: '晚上',
-        type: 'line',
-        smooth: true,
-        data: A[2] // [12, 50, 51, 35, 70, 30, 20]
-      }
-    ]
+      name: '早上',
+      type: 'line',
+      smooth: true,
+      data: A[0] //[18, 36, 65, 30, 78, 40, 33]
+    }, {
+      name: '中午',
+      type: 'line',
+      smooth: true,
+      data: A[1] // [12, 50, 51, 35, 70, 30, 20]
+    }, {
+      name: '晚上',
+      type: 'line',
+      smooth: true,
+      data: A[2] // [12, 50, 51, 35, 70, 30, 20]
+    }]
   };
 
   chart.setOption(option);
@@ -89,8 +88,7 @@ function initChart(canvas, width, height, dpr) {
 function parseA(A) {
   let tag = ['早', '中', '晚']
   let res = []
-  for(let i = 0 ; i < A.length ; i++) {
-    A[i].push(0)
+  for (let i = 0; i < A.length; i++) {
     res.push({
       tag: tag[i],
       data: A[i]
@@ -110,7 +108,7 @@ function initChartSum(canvas, width, height, dpr) {
   const mycolor = [];
   myseries_Sum = []
   if (today != null)
-  // 早中晚，最多3 = today.length
+    // 早中晚，最多3 = today.length
     for (var i = 0; i < today.length; i++) {
       var tmp = {};
       tmp["name"] = today[i].tag;
@@ -122,12 +120,15 @@ function initChartSum(canvas, width, height, dpr) {
         let num = dataTmp[i] - dataTmp[i - 1]
         num = parseInt(num / 0.045 * 15)
         data_sum.push(num)
+        if (i == dataTmp.length - 1) data_sum.push(0)
       }
+
       tmp["data"] = data_sum;
       myseries_Sum.push(tmp);
       mylengend.push(today[i].tag);
       mycolor.push(color_list[i])
     }
+  console.log("myseries_Sum in initSum", myseries_Sum)
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
@@ -543,29 +544,32 @@ Page({
         var time = '_' + year + month + day;
         console.log("time:", time)
         let cloudPathTmp = 'dataOneDay/' + time + '.png'
-        if(SumFlag) cloudPathTmp = 'dataOneDaySum/' + time + '.png'
+        if (SumFlag) cloudPathTmp = 'dataOneDaySum/' + time + '.png'
         wx.cloud.uploadFile({
           cloudPath: cloudPathTmp, // 上传至云端的路径
           filePath: tempFilePath, // 小程序临时文件路径
           success: res => {
             console.log("上传云端成功", res);
-            var img_path = res.fileID;
-            if(SumFlag) {
+            let img_path = res.fileID;
+            if (SumFlag) {
               that.setData({
                 imgSum_path: img_path,
                 hiddenall: true
               })
-            }
-            else {
+            } else {
               that.setData({
                 img_path: img_path,
                 hiddenall: true
               })
             }
-
-            // 上传数据到数据库
-            that.uploadToDB()
-            // that.get_infoP();
+            let img_pathTmp = that.data.img_path
+            let imgSumTmp = that.data.imgSum_path
+            console.log(imgSumTmp, img_pathTmp)
+            if (img_pathTmp && imgSumTmp) {
+              // 当两个图片都存在时候，再上传到数据库
+              // 上传数据到数据库
+              that.uploadToDB()
+            }
           },
           fail: () => {
             console.log(error)
@@ -582,7 +586,7 @@ Page({
     let t;
     year = date.getFullYear();
     month = date.getMonth() + 1;
-    if(month < 10) month = '0' + month
+    if (month < 10) month = '0' + month
     day = date.getDate();
     let res = "_" + year + month + day
     return res
@@ -594,6 +598,7 @@ Page({
     let id = app.globalData.open_ID;
     let img = this.data.img_path
     let imgSum = this.data.imgSum_path
+
     let data = this.data.data1
     let time = this.getToday()
     db.collection('dataOneDay').where({
@@ -609,7 +614,7 @@ Page({
           that.add_DataOneDay(img, imgSum, data, id, time)
       })
   },
-  update_DataOneDay(imgPath, imgSumPath,  data, id, time) {
+  update_DataOneDay(imgPath, imgSumPath, data, id, time) {
     db.collection('dataOneDay').where({
         time: time,
         patientId: id

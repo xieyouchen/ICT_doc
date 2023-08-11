@@ -1,5 +1,4 @@
 // pages/data/data.js
-var util = require('../../utils/util.js')
 const app = getApp()
 const db = wx.cloud.database()
 let data1 = [app.globalData.data2, app.globalData.data2];

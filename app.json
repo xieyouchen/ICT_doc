@@ -1,4 +1,5 @@
 {
+  "lazyCodeLoading": "requiredComponents",
   "pages": [
     "pages/login/login",
     "pages/detailA/detailA",
@@ -6,7 +7,6 @@
     "pages/service/service",
     "pages/characteristic/characteristic",
     "pages/com/com",
-    "pages/search/search",
     "pages/chat/chat",
     "pages/data/data"
   ],

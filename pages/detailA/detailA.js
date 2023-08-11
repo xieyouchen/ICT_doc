@@ -160,6 +160,7 @@ Page({
   data: {
     show: true,
     detail: {},
+    detail_factors: [],
     ec: {
       onInit: initChart
     },
@@ -217,6 +218,7 @@ Page({
     return myseries_Sum
   },
   getFactors(todayData) {
+    // console.log("todayData in getFac", todayData)
     let detail_factors = []
     // 肺活量峰值，L/min
     let myseries_Sum = this.getMyseries_Sum()
