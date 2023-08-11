@@ -156,95 +156,6 @@ function initChart(canvas, width, height, dpr) {
   return chart;
 }
 
-function initChart1(canvas, width, height, dpr) {
-  const chart1 = echarts.init(canvas, null, {
-    width: width,
-    height: height,
-    devicePixelRatio: dpr // new
-  });
-  canvas.setChart(chart1);
-
-  var data = [];
-  var data2 = [];
-
-  for (var i = 0; i < 10; i++) {
-    data.push(
-      [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 40)
-      ]
-    );
-    data2.push(
-      [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100)
-      ]
-    );
-  }
-
-  var axisCommon = {
-    axisLabel: {
-      textStyle: {
-        color: '#C8C8C8'
-      }
-    },
-    axisTick: {
-      lineStyle: {
-        color: '#fff'
-      }
-    },
-    axisLine: {
-      lineStyle: {
-        color: '#C8C8C8'
-      }
-    },
-    splitLine: {
-      lineStyle: {
-        color: '#C8C8C8',
-        type: 'solid'
-      }
-    }
-  };
-
-  var option1 = {
-    color: ["#FF7070", "#60B6E3"],
-    backgroundColor: '#eee',
-    xAxis: axisCommon,
-    yAxis: axisCommon,
-    legend: {
-      data: ['aaaa', 'bbbb']
-    },
-    visualMap: {
-      show: false,
-      max: 100,
-      inRange: {
-        symbolSize: [20, 70]
-      }
-    },
-    series: [{
-        type: 'scatter',
-        name: 'aaaa',
-        data: data
-      },
-      {
-        name: 'bbbb',
-        type: 'scatter',
-        data: data2
-      }
-    ],
-    animationDelay: function (idx) {
-      return idx * 50;
-    },
-    animationEasing: 'elasticOut'
-  };
-
-
-  chart1.setOption(option1);
-  return chart1;
-}
-
 Page({
   data: {
     show: true,
@@ -252,9 +163,7 @@ Page({
     ec: {
       onInit: initChart
     },
-    ec1: {
-      onInit: initChart1
-    },
+
     ecSum: {
       onInit: initChartSum
     }
@@ -288,6 +197,7 @@ Page({
     let app = getApp()
     const tmpdata = app.globalData.look;
     const today = tmpdata.today;
+    console.log("today in getMyseries_Sum()", today)
     if (today != null)
       for (var i = 0; i < today.length; i++) {
         var tmp = {};
@@ -341,11 +251,19 @@ Page({
       detail_factors
     })
   },
-  onLoad: function () {
+  onLoad: function (options) {
     let app = getApp()
     // 翻转 .look 内的数据
+    let detail = app.globalData.look
     this.setData({
-      detail: app.globalData.look
+      detail
+    })
+    console.log("options in detailA.js", options)
+    let imgSum = options.imgSum
+    let img = detail.today[0].img
+    this.setData({
+      imgSum,
+      img
     })
     this.getFactors(this.data.detail.today)
   },

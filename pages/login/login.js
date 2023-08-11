@@ -89,40 +89,30 @@ Page({
       .watch({
         onChange: function (snapshot) {
           console.log('snapshot', snapshot)
+          let data = snapshot.docs
+          data.sort(that.compareFn)
+          // console.log("res of all data after sorting in login.js", data)
+          that.setData({
+            dataAll: data
+          })
+          // 获得 img_time 的数据
+          let img_time = []
+          for (let i = 0; i <= data.length - 1; i++) {
+            let time = that.getTimeSplice(data[i].time)
+            img_time.push({
+              img: data[i].img,
+              year: time['year'],
+              month: time['month'],
+              day: time['day']
+            })
+          }
+          that.setData({
+            img_time: img_time
+          })
         },
         onError: function (err) {
           console.error('the watch closed because of error', err)
         }
-      })
-  },
-  getAllData() {
-    let that = this
-    let id = wx.getStorageSync('open_ID')
-    db.collection('dataOneDay').where({
-        patientId: id
-      }).get()
-      .then(res => {
-        // console.log("res of all data in login.js", res)
-        let data = res.data
-        data.sort(that.compareFn)
-        // console.log("res of all data after sorting in login.js", data)
-        this.setData({
-          dataAll: data
-        })
-        // 获得 img_time 的数据
-        let img_time = []
-        for (let i = 0; i <= data.length - 1; i++) {
-          let time = that.getTimeSplice(data[i].time)
-          img_time.push({
-            img: data[i].img,
-            year: time['year'],
-            month: time['month'],
-            day: time['day']
-          })
-        }
-        that.setData({
-          img_time: img_time
-        })
       })
   },
   getTimeSplice(time) {
@@ -137,7 +127,6 @@ Page({
     data['morning'].push(data['morning'][5])
     data['noon'].push(data['noon'][5])
     data['night'].push(data['night'][5])
-
     return data
   },
   getDataOneDay(index) {
@@ -171,8 +160,6 @@ Page({
     this.chooseP()
     // 获取该病人的每天数据，按照时间顺序从前往后
     this.watchAllData()
-    setInterval(this.getAllData, 3000)
-    // this.getAllData()
     this.setData({
       flag: app.globalData.haveFlag,
     })
@@ -322,8 +309,10 @@ Page({
     console.log("data in transfer() of login.js", data)
     app.globalData.look = data
     console.log("look:", app.globalData.look)
+    let imgSum = this.data.dataAll[index].imgSum
+    // img 通过 app.globalData.look 传递
     wx.navigateTo({
-      url: '/pages/detailA/detailA',
+      url: '/pages/detailA/detailA?imgSum=' + imgSum,
     })
   },
   //访问医生的数据库

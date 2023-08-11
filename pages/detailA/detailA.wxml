@@ -30,9 +30,9 @@
 <view class="container">
   <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
   <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ecSum }}"></ec-canvas>
-  <!-- <ec-canvas wx:if="{{show}}" id="mychart-dom-scatter" canvas-id="mychart-scatter" ec="{{ ec1 }}"></ec-canvas> -->
 </view>
-
+<!-- <image src="{{img}}" alt="" mode="widthFix" style="height: 150px; width: 250px;" />
+<image src="{{imgSum}}" alt="" mode="widthFix" style="height: 150px; width: 250px;" /> -->
 <view class="under">
   <view class="bg-h">
     {{detail.year}}-{{detail.month}}-{{detail.day}}呼气总量数据

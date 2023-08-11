@@ -33,7 +33,7 @@
 </view> -->
 <view class="container">
   <ec-canvas id="mychart-dom-line" force-use-old-canvas="true" canvas-id="mychart-line" ec="{{ ec }}">1</ec-canvas>
-  
+  <ec-canvas id="mychart-dom-line-Sum" force-use-old-canvas="true" canvas-id="mychart-line-Sum" ec="{{ ecSum }}"></ec-canvas>
 </view>
 <!-- <ec-canvas id="mychart-dom-scatter" canvas-id="mychart-scatter" ec="{{ ec1 }}">2</ec-canvas> -->
 <button bindtap="update">上传</button>

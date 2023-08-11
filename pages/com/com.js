@@ -4,6 +4,7 @@ const db = wx.cloud.database()
 const DB2 = wx.cloud.database().collection("IOT_Patient")
 import * as echarts from '../../ec-canvas/echarts';
 let len = app.globalData.len;
+let myseries_Sum = [];
 function initChart(canvas, width, height, dpr) {
   const chart = echarts.init(canvas, null, {
     width: width,
@@ -78,12 +79,6 @@ function initChart(canvas, width, height, dpr) {
         smooth: true,
         data: A[2] // [12, 50, 51, 35, 70, 30, 20]
       }
-      /*{
-            name: 'C',
-            type: 'line',
-            smooth: true,
-            data:A[0]// [10, 30, 31, 50, 40, 20, 10]
-          }*/
     ]
   };
 
@@ -91,93 +86,95 @@ function initChart(canvas, width, height, dpr) {
   return chart;
 }
 
-function initChart1(canvas, width, height, dpr) {
-  const chart1 = echarts.init(canvas, null, {
+function parseA(A) {
+  let tag = ['早', '中', '晚']
+  let res = []
+  for(let i = 0 ; i < A.length ; i++) {
+    A[i].push(0)
+    res.push({
+      tag: tag[i],
+      data: A[i]
+    })
+  }
+  return res
+}
+
+function initChartSum(canvas, width, height, dpr) {
+  var A = app.globalData.data_p
+  //var B=data2;
+  console.log("A in initChartSum()", A)
+  const today = parseA(A)
+  console.log("today in initChartSum()", today)
+  const mylengend = [];
+  const color_list = ["#37A2DA", "#67E0E3", "#9FE6B8"];
+  const mycolor = [];
+  myseries_Sum = []
+  if (today != null)
+  // 早中晚，最多3 = today.length
+    for (var i = 0; i < today.length; i++) {
+      var tmp = {};
+      tmp["name"] = today[i].tag;
+      tmp["type"] = 'line';
+      tmp["smooth"] = true;
+      let data_sum = [0]
+      let dataTmp = today[i].data
+      for (let i = 2; i < dataTmp.length; i++) {
+        let num = dataTmp[i] - dataTmp[i - 1]
+        num = parseInt(num / 0.045 * 15)
+        data_sum.push(num)
+      }
+      tmp["data"] = data_sum;
+      myseries_Sum.push(tmp);
+      mylengend.push(today[i].tag);
+      mycolor.push(color_list[i])
+    }
+  const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
     devicePixelRatio: dpr // new
   });
-  canvas.setChart(chart1);
-
-  var data = [];
-  var data2 = [];
-
-  for (var i = 0; i < 10; i++) {
-    data.push(
-      [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 40)
-      ]
-    );
-    data2.push(
-      [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100)
-      ]
-    );
-  }
-
-  var axisCommon = {
-    axisLabel: {
-      textStyle: {
-        color: '#C8C8C8'
-      }
-    },
-    axisTick: {
-      lineStyle: {
-        color: '#fff'
-      }
-    },
-    axisLine: {
-      lineStyle: {
-        color: '#C8C8C8'
-      }
-    },
-    splitLine: {
-      lineStyle: {
-        color: '#C8C8C8',
-        type: 'solid'
-      }
-    }
-  };
-  // scatter
-  var option1 = {
-    color: ["#FF7070", "#60B6E3"],
-    backgroundColor: '#eee',
-    xAxis: axisCommon,
-    yAxis: axisCommon,
+  canvas.setChart(chart);
+  var option = {
+    color: mycolor,
     legend: {
-      data: ['aaaa', 'bbbb']
+      data: mylengend,
+      top: 'auto',
+      left: 'right',
+      z: 100
     },
-    visualMap: {
-      show: false,
-      max: 100,
-      inRange: {
-        symbolSize: [20, 70]
-      }
+    grid: {
+      containLabel: true
     },
-    series: [{
-        type: 'scatter',
-        name: 'aaaa',
-        data: data
+    tooltip: {
+      show: true,
+      trigger: 'axis'
+    },
+    xAxis: {
+      name: "时间(s)",
+      type: 'category',
+      boundaryGap: false,
+      nameLocation: 'end',
+      nameTextStyle: {
+        padding: [-20, 20, 0, -20]
       },
-      {
-        name: 'bbbb',
-        type: 'scatter',
-        data: data2
-      }
-    ],
-    animationDelay: function (idx) {
-      return idx * 50;
+      data: ['0', '第0.2s', '第0.4s', '第0.6s', '第0.8s', '第1.0s'],
+      // show: false
     },
-    animationEasing: 'elasticOut'
+    yAxis: {
+      name: "呼气流量值(L/min)",
+      x: 'center',
+      type: 'value',
+      splitLine: {
+        lineStyle: {
+          type: 'dashed'
+        }
+      }
+    },
+    series: myseries_Sum
   };
 
-
-  chart1.setOption(option1);
-  return chart1;
+  chart.setOption(option);
+  return chart;
 }
 
 Page({
@@ -202,8 +199,8 @@ Page({
     ec: {
       onInit: initChart
     },
-    ec1: {
-      onInit: initChart1
+    ecSum: {
+      onInit: initChartSum
     }
   },
   /**
@@ -528,10 +525,10 @@ Page({
       })
     }
   },
-  down() {
+  down(dom, SumFlag) {
     var that = this;
     // 这应该就是找到 echart 图标的 wxml 节点
-    const ecComponent = that.selectComponent('#mychart-dom-line');
+    const ecComponent = that.selectComponent(dom);
     console.log("ecC:", ecComponent)
     // 先保存图片到临时的本地文件，然后存入系统相册，canvas->图片路径
     ecComponent.canvasToTempFilePath({
@@ -545,17 +542,27 @@ Page({
         var hour = app.globalData.time_n.hour;
         var time = '_' + year + month + day;
         console.log("time:", time)
+        let cloudPathTmp = 'dataOneDay/' + time + '.png'
+        if(SumFlag) cloudPathTmp = 'dataOneDaySum/' + time + '.png'
         wx.cloud.uploadFile({
-          cloudPath: time + '.png', // 上传至云端的路径
+          cloudPath: cloudPathTmp, // 上传至云端的路径
           filePath: tempFilePath, // 小程序临时文件路径
           success: res => {
             console.log("上传云端成功", res);
             var img_path = res.fileID;
+            if(SumFlag) {
+              that.setData({
+                imgSum_path: img_path,
+                hiddenall: true
+              })
+            }
+            else {
+              that.setData({
+                img_path: img_path,
+                hiddenall: true
+              })
+            }
 
-            that.setData({
-              img_path: img_path,
-              hiddenall: true
-            })
             // 上传数据到数据库
             that.uploadToDB()
             // that.get_infoP();
@@ -586,6 +593,7 @@ Page({
     console.log("app.globalData", app.globalData)
     let id = app.globalData.open_ID;
     let img = this.data.img_path
+    let imgSum = this.data.imgSum_path
     let data = this.data.data1
     let time = this.getToday()
     db.collection('dataOneDay').where({
@@ -596,12 +604,12 @@ Page({
         console.log("res while searching in dataOneDay", res)
         if (res.data.length > 0) {
           // 更新
-          that.update_DataOneDay(img, data, id, time)
+          that.update_DataOneDay(img, imgSum, data, id, time)
         } else
-          that.add_DataOneDay(img, data, id, time)
+          that.add_DataOneDay(img, imgSum, data, id, time)
       })
   },
-  update_DataOneDay(imgPath, data, id, time) {
+  update_DataOneDay(imgPath, imgSumPath,  data, id, time) {
     db.collection('dataOneDay').where({
         time: time,
         patientId: id
@@ -610,17 +618,19 @@ Page({
         data: {
           noon: data[1],
           night: data[2],
-          img: imgPath
+          img: imgPath,
+          imgSum: imgSumPath
         }
       })
       .then(res => {
         console.log("res after updating in com.js", res)
       })
   },
-  add_DataOneDay(imgPath, data, id, time) {
+  add_DataOneDay(imgPath, imgSumPath, data, id, time) {
     db.collection('dataOneDay').add({
         data: {
           img: imgPath,
+          imgSum: imgSumPath,
           morning: data[0],
           noon: [],
           night: [],
@@ -640,7 +650,8 @@ Page({
     })
     // 开始上传数据
     setTimeout(() => {
-      that.down();
+      that.down('#mychart-dom-line', false);
+      that.down('#mychart-dom-line-Sum', true);
     }, 1000);
   },
   get_infoP() {
