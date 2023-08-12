@@ -2,8 +2,6 @@
 //获取应用实例
 const app = getApp()
 let db = wx.cloud.database()
-const DB1 = wx.cloud.database().collection("IOT_Doctor")
-const DB2 = wx.cloud.database().collection("IOT_Patient")
 let mynote = []
 let userdata = [];
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
@@ -64,10 +62,10 @@ Page({
   },
   compareFn(a, b) {
     if (a.time < b.time) {
-      return -1;
+      return 1;
     }
     if (a.time > b.time) {
-      return 1;
+      return -1;
     }
     // a 一定等于 b
     return 0;
@@ -84,11 +82,12 @@ Page({
           let data = snapshot.docs
           data.sort(that.compareFn)
           // console.log("res of all data after sorting in login.js", data)
-          that.setData({
-            dataAll: data
-          })
           // 获得 img_time 的数据
           let img_time = []
+          that.setData({
+            dataAll: data,
+            img_time
+          })
           for (let i = 0; i <= data.length - 1; i++) {
             let time = that.getTimeSplice(data[i].time)
             img_time.push({
@@ -169,12 +168,6 @@ Page({
         nickName: user.nickName
       })
     }
-    //从其他页面返回本页面时获取参数
-    if (this.data.open_ID != "") {
-      if (this.data.flag == 1) this.get_infoD();
-      if (this.data.flag == 2) this.get_infoP();
-    }
-    // console.log('flag',this.data.flag);
 
   },
   storeUser() {
@@ -260,9 +253,6 @@ Page({
       ispatient: true,
       flag: 2
     })
-    //第一次编译时获取参数
-    this.get_infoP()
-    // console.log("userinfo:",app.globalData.open_ID)
   },
 
   chooseD: function () {
@@ -304,24 +294,7 @@ Page({
       })
     }
   },
-  //访问病人的数据库
-  get_infoP() {
-    var that = this;
-    var user = app.globalData.open_ID;
-    // console.log('USER:',user);
-    if (that.data.flag == 2) {
-      DB2.where({
-        openid: user
-      }).get({
-        success(res) {
-          console.log('res', res);
-          that.setData({
-            user_detail: res.data[0]
-          })
-        }
-      })
-    }
-  },
+
   checkCondition: function () {
     this.setData({
       toTabs: 1

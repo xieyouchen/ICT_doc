@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-var util = require('../../../utils/util.js');
+var util = require('../../utils/util.js');
 const app = getApp()
 const db = wx.cloud.database()
 //websocket心跳重连对象
@@ -440,26 +440,6 @@ Page({
   },
   //页面隐藏/切入后台时触发
   onHide: function () {
-    wx.onSocketClose(function (res) {
-      console.log('WebSocket已关闭！')
-    })
-  },
-  //页面卸载时触发
-  onUnload: function () {
-    var that = this;
-    var id = that.data.userId;
-    console.log("id:", id)
-    DB.doc(id).update({
-      data: {
-        CHAT: that.data.chatList
-      },
-      success(res) {
-        console.log("更新成功", res)
-      },
-      fail(res) {
-        console.log("更新失败", res)
-      }
-    })
     wx.onSocketClose(function (res) {
       console.log('WebSocket已关闭！')
     })
