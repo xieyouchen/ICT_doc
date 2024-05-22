@@ -2,27 +2,30 @@
   <view class="bg-h">
     {{detail.year}}-{{detail.month}}-{{detail.day}}呼气指标
   </view>
+
   <view class="tr bg-w">
     <view class="th">时间段</view>
     <view class="th">FEV1(L)</view>
     <view class="th">PEF(L/min)</view>
     <view class="th ">PEFR(%)</view>
+    <view class="th ">状态</view>
   </view>
   <scroll-view scroll-y class="table" style="height:25%" scroll-into-view="{{toView}}" scroll-with-animation="true">
     <block wx:for="{{detail_factors}}" wx:key="index">
-      <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+      <view class="tr bg-g">
+        <view class="td">{{item.tag}}</view>
+        <view class="td">{{item.data[0]}}</view>
+        <view class="td" style="color: {{item.color}}">{{item.data[1]}}</view>
+        <view class="td">{{item.data[2]}}</view>
+        <view class="td" style="color: {{item.color}}">{{item.state}}</view>
+      </view>
+      <!-- <view class="tr" wx:else>
         <view class="td">{{item.tag}}</view>
         <view class="td">{{item.data[0]}}</view>
         <view class="td">{{item.data[1]}}</view>
         <view class="td">{{item.data[2]}}</view>
-
-      </view>
-      <view class="tr" wx:else>
-        <view class="td">{{item.tag}}</view>
-        <view class="td">{{item.data[0]}}</view>
-        <view class="td">{{item.data[1]}}</view>
-        <view class="td">{{item.data[2]}}</view>
-      </view>
+        <view class="td">{{state[index]}}</view>
+      </view> -->
     </block>
     <view id="toView"></view>
   </scroll-view>

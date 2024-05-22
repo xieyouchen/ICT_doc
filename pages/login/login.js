@@ -122,7 +122,7 @@ Page({
   },
   getDataOneDay(index) {
     let data = this.data.dataAll[index]
-    data = this.addLastNum(data)
+    // data = this.addLastNum(data)
     console.log("data after addLastNum()", data)
     let time = this.getTimeSplice(data['time'])
     let dataToday = {
@@ -183,7 +183,7 @@ Page({
       hasUserInfo: true
     })
     wx.setStorageSync('userInfo', userInfo)
-
+    this.watchAllData()
     // 存入数据库
     db.collection('users').add({
       data: {

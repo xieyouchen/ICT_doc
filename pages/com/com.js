@@ -27,12 +27,13 @@ function initChart(canvas, width, height, dpr) {
       text: title,
       left: 'center'
     },
-    color: ["#37A2DA", "#67E0E3"],
+    color: ["#37A2DA", "#67E0E3", "#9FE6B8"],
     legend: {
       data: [
-        ['早上'],
-        ['晚上']
-      ][choose],
+        '早',
+        '中',
+        '晚'
+      ],
       top: 'auto',
       left: 'right',
 
@@ -64,17 +65,17 @@ function initChart(canvas, width, height, dpr) {
       // show: false
     },
     series: [{
-      name: '早上',
+      name: '早',
       type: 'line',
       smooth: true,
       data: A[0] //[18, 36, 65, 30, 78, 40, 33]
     }, {
-      name: '中午',
+      name: '中',
       type: 'line',
       smooth: true,
       data: A[1] // [12, 50, 51, 35, 70, 30, 20]
     }, {
-      name: '晚上',
+      name: '晚',
       type: 'line',
       smooth: true,
       data: A[2] // [12, 50, 51, 35, 70, 30, 20]
@@ -116,11 +117,11 @@ function initChartSum(canvas, width, height, dpr) {
       tmp["smooth"] = true;
       let data_sum = [0]
       let dataTmp = today[i].data
-      for (let i = 2; i < dataTmp.length; i++) {
+      for (let i = 1; i < dataTmp.length; i++) {
         let num = dataTmp[i] - dataTmp[i - 1]
         num = parseInt(num / 0.045 * 15)
         data_sum.push(num)
-        if (i == dataTmp.length - 1) data_sum.push(0)
+        // if (i == dataTmp.length - 1) data_sum.push(0)
       }
 
       tmp["data"] = data_sum;
@@ -681,8 +682,8 @@ Page({
       var tmp = {};
       tmp["data"] = app.globalData.data2[len - 1];
       tmp["img"] = img_path;
-      if (data_n.hour < 12) tmp["tag"] = "早上";
-      else tmp["tag"] = "晚上";
+      if (data_n.hour < 12) tmp["tag"] = "早";
+      else tmp["tag"] = "晚";
       data_n["today"].push(tmp);
       user_data["mydata"].push(data_n);
     } else {
@@ -697,8 +698,8 @@ Page({
         var tmp = {};
         tmp["data"] = app.globalData.data2[len - 1];
         tmp["img"] = img_path;
-        if (data_n.hour < 12) tmp["tag"] = "早上";
-        else tmp["tag"] = "晚上";
+        if (data_n.hour < 12) tmp["tag"] = "早";
+        else tmp["tag"] = "晚";
         data_n["today"].push(tmp);
         user_data["mydata"].push(data_n);
       } else {
@@ -766,7 +767,7 @@ Page({
 
             })
             return;
-          } else tmp["tag"] = "晚上";
+          } else tmp["tag"] = "晚";
 
           data_n["today"].push(tmp);
           user_data["mydata"].push(data_n);
